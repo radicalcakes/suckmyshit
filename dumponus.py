@@ -10,7 +10,7 @@ app.config.from_object(__name__)
 #config object, load production from envvar
 app.config.from_object('config')
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) 
 
 
 if __name__ == '__main__':
