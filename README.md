@@ -21,7 +21,7 @@ flask - `pip install flask`
 
 redis - `pip install redis`
 
-pillow - `pip install Pillow`
+flask-uploads - `pip install flask-uploads`
 
 TODOs
 --
@@ -29,6 +29,7 @@ TODOs
  - start thinking of thumbnail size and add thumbnail
  - use ajax to post images
  - explore foundation
+ - For now, we'll use flask to serve the client. We will use nginx and angular for static and clients in the future
 
 Models
 --
@@ -43,9 +44,9 @@ GET (id)
     "data": {
         "id": "vid23dflk",
         "type": "image/jpeg",
-        "creation_date": datetime.utc.now(),
+        "creation_date": "2014-04-09 19:31:53.355174",
         "size": 521916,
-        "url": "http://dumpon.us/vid23dflk.jpg"
+        "url": "http://dumpon.us/imgs/vid23dflk.jpg"
     }
 }
 ```
