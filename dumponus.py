@@ -1,4 +1,5 @@
 import os
+import ast
 import redis
 from flask import (Flask, request, url_for, json, jsonify, 
                                 render_template, redirect)
@@ -31,9 +32,7 @@ def index():
 
 @app.route('/api/images/<img_id>', methods=['GET'])
 def get_image(img_id):
-    print img_id
-    print db.keys()
-    img_json = json.dumps(db.get(img_id))
+    img_json = json.dumps(ast.literal_eval(db.get(img_id)))
     if img_json:
         return app.response_class(response=img_json, mimetype='application/json')
 

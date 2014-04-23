@@ -66,7 +66,6 @@ class DumponUsTest(unittest.TestCase):
         self.image_model.save()
         resp = self.app.get('/api/images/'+self.image_model.get_id())
         obj_representation = json.loads(resp.data)
-        print resp.status
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.mimetype, 'application/json')
         self.assertEqual(resp.data, self.json_image)
