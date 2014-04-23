@@ -23,6 +23,10 @@ redis - `pip install redis`
 
 flask-uploads - `pip install flask-uploads`
 
+Pillow - `pip install Pillow`
+
+pyhashxx - `pip install pyshashxx`
+
 TODOs
 --
  - Test crud for image
@@ -41,13 +45,12 @@ Models
 GET (id)
 ```javascript
 {
-    "data": {
         "id": "vid23dflk",
+        "title": "Monkey Socks",
         "type": "image/jpeg",
         "creation_date": "2014-04-09 19:31:53.355174",
         "size": 521916,
         "url": "http://dumpon.us/imgs/vid23dflk.jpg"
-    }
 }
 ```
 
