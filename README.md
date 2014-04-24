@@ -99,3 +99,9 @@ Tests
 
 Usage
 --
+
+- GET /api/images/<image_id> - `curl -i -H "Accept: application/json" "localhost:5000/api/images/123"`
+
+- GET /api/images - `curl -i -H "Accept: application/json" "localhost:5000/api/images"`
+
+

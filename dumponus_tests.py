@@ -83,7 +83,6 @@ class DumponUsTest(unittest.TestCase):
     def test_404_on_get(self):
         """ Make a GET to api/images, providing a bad id """
         resp = self.app.get('/api/images/' + '1234')
-        print resp.data
         self.assertEqual(resp.status_code, 404)
         self.assertEqual(resp.status, '404 NOT FOUND')
 
@@ -97,6 +96,7 @@ class DumponUsTest(unittest.TestCase):
         self.assertEqual(resp.mimetype, 'application/json')
         self.assertIsInstance(obj_representation, dict)
         self.assertIsInstance(obj_representation['data'], list)
+
 
     def test_validate_post_params(self):
         """ Makes sure post parameters are correct """

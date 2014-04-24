@@ -21,8 +21,20 @@ configure_uploads(app, uploaded_photos)
 patch_request_class(app, 32 * 1024 * 1024)
 
 
-def validate_dict_fields(d):
-    pass
+def return_get_resp(images):
+    """ Returns the proper response for a GET to /api/images """
+    resp_dict = {'data': [], 'status': 404}
+    resp = app.response_class(mimetype='application/json')
+    if len(images) > 0:
+        resp_dict['data'] = images
+        resp_dict['status'] = 200
+        resp.data = json.dumps(resp_dict)
+        resp.status_code = 200
+        return resp
+    else:
+        resp.data = json.dumps(resp_dict)
+        resp.status_code = 404
+        return resp
 
 
 @app.route('/', methods=['GET'])
@@ -50,12 +62,10 @@ def get_image(img_id):
 
 @app.route('/api/images', methods=['GET', 'POST'])
 def get_imgs_or_post():
-    resp_dict = {}
-    if request.method == 'GET':
-        images = db.lrange('data', 0, -1)
-        resp_dict['data'] = images
-        resp_dict['status'] = 200
-        return app.response_class(response=json.dumps(resp_dict), mimetype='application/json')
+    images = db.lrange('data', 0, -1)
+    req = request.method
+    if req == 'GET':
+        return return_get_resp(images)
     elif request.method == 'POST':
         return
     else:
