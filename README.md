@@ -45,13 +45,43 @@ Models
 GET (id)
 ```javascript
 {
-        "id": "vid23dflk",
-        "title": "Monkey Socks",
-        "type": "image/jpeg",
-        "creation_date": "2014-04-09 19:31:53.355174",
-        "size": 521916,
-        "url": "http://dumpon.us/imgs/vid23dflk.jpg"
+
+  'data':  {
+            "id": "vid23dflk",
+            "title": "Monkey Socks",
+            "type": "image/jpeg",
+            "creation_date": "2014-04-09 19:31:53.355174",
+            "size": 521916,
+            "url": "http://dumpon.us/imgs/vid23dflk.jpg"
+    },
+    'status': 200
 }
+```
+
+GET /api/images
+
+```javascript
+{
+    'data': [
+        {
+            "id": "vid23dflk",
+            "title": "Monkey Socks",
+            "type": "image/jpeg",
+            "creation_date": "2014-04-09 19:31:53.355174",
+            "size": 521916,
+            "url": "http://dumpon.us/imgs/vid23dflk.jpg"
+        },
+        {
+            "id": "vid23dflk",
+            "title": "Monkey Socks",
+            "type": "image/jpeg",
+            "creation_date": "2014-04-09 19:31:53.355174",
+            "size": 521916,
+            "url": "http://dumpon.us/imgs/vid23dflk.jpg"
+      },
+    ]
+}
+
 ```
 
 POST Parameters:
