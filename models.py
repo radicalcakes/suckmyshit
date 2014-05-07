@@ -17,7 +17,7 @@ class Photo(object):
         self.__to_dict()
 
     def make_id(self, name, creation_date):
-        self.__id = str(hashxx(secure_filename(name) + str(creation_date)))
+        self.__id = str(hashxx(name)) + str(creation_date)
     
     def get_id(self):
         return self.__id

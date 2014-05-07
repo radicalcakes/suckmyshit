@@ -3,17 +3,17 @@
 import datetime
 import unittest
 import dumponus
+import requests
 from pyhashxx import hashxx
 from flask import json
 from models import Photo
-from werkzeug import secure_filename
 
 
 class DumponUsTest(unittest.TestCase):
 
     def setUp(self):
         self.date = str(datetime.datetime.now())
-        self.uuid = str(hashxx(secure_filename('wut.jpg') + self.date))
+        self.uuid = str(hashxx('wut.jpg')) + str(self.date)
         self.formatted_image = {'data': {
             "id": self.uuid,
             "title": "Monkey Socks",
@@ -30,6 +30,7 @@ class DumponUsTest(unittest.TestCase):
         #keep track of ids (they are changing) and delete test data on tearDown
         self.ids = []
         self.images = []
+        self.url = '/api/images'
 
     def test_image_model_data_is_dict(self):
         """ Image model is a dict """
@@ -71,7 +72,7 @@ class DumponUsTest(unittest.TestCase):
         self.image_model.save()
         self.ids.append(self.image_model.data['data']['id'])
         self.images.append(self.image_model.data['data'])
-        resp = self.app.get('/api/images/'+self.image_model.get_id())
+        resp = self.app.get(self.url + '/' + self.image_model.get_id())
         obj_representation = json.loads(resp.data)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.mimetype, 'application/json')
@@ -90,25 +91,18 @@ class DumponUsTest(unittest.TestCase):
     def test_get_photos(self):
         """ Make a GET to api/images and retrieve list of images """
         self.image_model.save()
-        resp = self.app.get('/api/images')
+        resp = self.app.get(self.url)
         obj_representation = json.loads(resp.data)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.mimetype, 'application/json')
         self.assertIsInstance(obj_representation, dict)
         self.assertIsInstance(obj_representation['data'], list)
 
-
-    def test_validate_post_params(self):
-        """ Makes sure post parameters are correct """
-        pass
-
     def test_post_and_upload_photo(self):
         """ Make a POST to api/images with the required params """
-        pass
-
-    def test_photo_fail_no_image(self):
-        """ Fail by no image being passed through image parameter """
-        pass
+        files = {'file': ('testimgs/test.png', open('testimgs/test.png', 'rb'), 'image/png')}
+        resp = self.app.post('http://127.0.0.1:5000/api/images', data=files)
+        self.assertEqual(resp.status_code, 200)
 
     def tearDown(self):
         pipe = self.db.pipeline()

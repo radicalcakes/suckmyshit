@@ -5,11 +5,13 @@ from flask import (Flask, request, url_for, json, jsonify,
                                 render_template, redirect)
 from flask.ext.uploads import (UploadSet, configure_uploads, 
                                                     IMAGES, UploadNotAllowed, patch_request_class)
+
 import config
+from PIL import Image
 
 app = Flask(__name__)
 
-#config object, load production from envvar
+#config object, load oduction from envvar
 app.config.from_object(config)
 
 db = redis.StrictRedis(db=0)
@@ -67,7 +69,8 @@ def get_imgs_or_post():
     if req == 'GET':
         return return_get_resp(images)
     elif request.method == 'POST':
-        return
+        print request.keys()
+        return 'ok'
     else:
         return
 
