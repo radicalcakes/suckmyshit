@@ -100,7 +100,7 @@ class DumponUsTest(unittest.TestCase):
 
     def test_post_and_upload_photo(self):
         """ Make a POST to api/images with the required params """
-        files = {'file': ('testimgs/test.png', open('testimgs/test.png', 'rb'), 'image/png')}
+        files = {'file': ( 'testimgs/test.png', open('testimgs/test.png', 'rb'), 'image/png')}
         resp = self.app.post('http://127.0.0.1:5000/api/images', data=files)
         self.assertEqual(resp.status_code, 200)
 

@@ -16,12 +16,19 @@ app.config.from_object(config)
 
 db = redis.StrictRedis(db=0)
 
-uploaded_photos = UploadSet('photos', IMAGES)
-configure_uploads(app, uploaded_photos)
+photos = UploadSet('photos', IMAGES)
+configure_uploads(app, photos)
 
 # 32 mb max upload size
 patch_request_class(app, 32 * 1024 * 1024)
 
+
+def return404():
+    resp_dict = {'data': [], 'status': 404}
+    resp = app.response_class(mimetype='application/json')
+    resp.data = json.dumps(resp_dict)
+    resp.status_code = 404
+    return resp
 
 def return_get_resp(images):
     """ Returns the proper response for a GET to /api/images """
@@ -34,8 +41,7 @@ def return_get_resp(images):
         resp.status_code = 200
         return resp
     else:
-        resp.data = json.dumps(resp_dict)
-        resp.status_code = 404
+        resp = return404()
         return resp
 
 
@@ -53,12 +59,7 @@ def get_image(img_id):
         resp.data = img_json
         return resp
     else:
-        img = {}
-        img['data'] = ' '
-        img['status'] = 404
-        img_json = json.dumps(img)
-        resp.data = img_json
-        resp.status_code = 404
+        resp = return404()
         return resp
 
 
@@ -69,8 +70,13 @@ def get_imgs_or_post():
     if req == 'GET':
         return return_get_resp(images)
     elif request.method == 'POST':
-        print request.keys()
-        return 'ok'
+        print request.files
+        # print request.values.keys()
+        try: 
+            filename = photos.save(request.files['image'])        
+            print filename
+        except UploadNotAllowed:
+            print "whatever"
     else:
         return
 

@@ -1,6 +1,6 @@
 import datetime
 from pyhashxx import hashxx
-from dumponus import db, uploaded_photos
+from dumponus import db, photos
 from werkzeug import secure_filename
 
 
@@ -36,7 +36,7 @@ class Photo(object):
 
     @property
     def make_url(self):
-        return uploaded_photos.url(self.id)
+        return photos.url(self.id)
 
     def save(self):
         """ saves to redis with the id as the key, also adds the object to a list saved in an images dict """

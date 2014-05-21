@@ -71,7 +71,7 @@ GET /api/images
 
 POST Parameters:
 * image: A binary file, base64 data
-* size: Size of the bin file
+* size: Size of the bin file (optional)
 * type: The type of the file that's being sent: file or base64
 * name (optional): The name of the file, this is automatically detected if uploading a file with a POST 
 * title (optional): Title of the upload
