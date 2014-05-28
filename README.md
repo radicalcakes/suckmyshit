@@ -37,6 +37,7 @@ GET (id)
             "type": "image/jpeg",
             "creation_date": "2014-04-09 19:31:53.355174",
             "size": 521916,
+            "thumbnail": "http://dumpon.us/imgs/vid23dflk450_450.jpg",
             "url": "http://dumpon.us/imgs/vid23dflk.jpg"
     } ,
     'status': 200
@@ -54,6 +55,7 @@ GET /api/images
             "type": "image/jpeg",
             "creation_date": "2014-04-09 19:31:53.355174",
             "size": 521916,
+            "thumbnail": "http://dumpon.us/imgs/vid23dflk450_450.jpg",
             "url": "http://dumpon.us/imgs/vid23dflk.jpg"
         },
         {
@@ -62,8 +64,9 @@ GET /api/images
             "type": "image/jpeg",
             "creation_date": "2014-04-09 19:31:53.355174",
             "size": 521916,
+            "thumbnail": "http://dumpon.us/imgs/vid23dflk450_450.jpg",
             "url": "http://dumpon.us/imgs/vid23dflk.jpg"
-      },
+    } 
     ]
 }
 
@@ -90,5 +93,7 @@ Usage
 - GET /api/images/<image_id> - `curl -i -H "Accept: application/json" "localhost:5000/api/images/123"`
 
 - GET /api/images - `curl -i -H "Accept: application/json" "localhost:5000/api/images"`
+
+- POST /api/images - `curl "http://localhost:5000/api/images" -F image=@"test.png" -F title="foobar"`
 
 

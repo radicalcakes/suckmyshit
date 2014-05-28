@@ -57,6 +57,11 @@ def return_get_resp(images):
         return return404()
 
 
+def get_content_type(ext):
+    contents = {'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'gif': 'image/gif', 'svg': 'image/svg+xml'}
+    return contents[ext]
+
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('home.html')
@@ -83,19 +88,17 @@ def get_imgs_or_post():
     elif request.method == 'POST':
         file = request.files['image']
         name = secure_filename(file.filename)
-        if file and '.' in name:
-            # p = Photo(name, )
-            print file.content_type
-            print file.content_length
-            print photos
-            print 'jpg' in photos
+        if file and photos.file_allowed(file, name):
+            extension = name.split('.')[1]
             try:
                 filename = photos.save(request.files['image'])
-                # print filename
             except UploadNotAllowed:
                 return return400()
+            else:
+                content_type = get_content_type(extension)
+                return return400()
     else:
-        return 'ljklk'
+        return return400()
 
 
 if __name__ == '__main__':
