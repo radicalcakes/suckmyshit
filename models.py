@@ -1,12 +1,11 @@
 import datetime
 from pyhashxx import hashxx
 from dumponus import db, photos
-from werkzeug import secure_filename
 
 
 class Photo(object):
     """ Save image data as a dictionary. Access the dictionary with img = new Image() img['data'] """
-    def __init__(self, name, title, typ, size,  url=None, creation_date=datetime.datetime.now()):
+    def __init__(self, name, typ, size,  title=None, url=None, creation_date=datetime.datetime.now()):
         self.type = typ
         self.title = title
         self.creation_date = creation_date
