@@ -1,22 +1,21 @@
 import datetime
-from pyhashxx import hashxx
 from dumponus import db, photos
 
 
 class Photo(object):
     """ Save image data as a dictionary. Access the dictionary with img = new Image() img['data'] """
-    def __init__(self, name, typ, size,  title=None, url=None, creation_date=datetime.datetime.now()):
+    def __init__(self, name, typ, size, url, title=None, creation_date=datetime.datetime.now()):
         self.type = typ
         self.title = title
         self.creation_date = creation_date
         self.size = size
         self.url = url
-        self.data = {'data' : {} }
-        self.make_id(name, creation_date)
+        self.data = {'data': {}}
+        self.make_id(name)
         self.__to_dict()
 
-    def make_id(self, name, creation_date):
-        self.__id = str(hashxx(name)) + str(creation_date)
+    def make_id(self, name):
+        self.__id = name.split('.')[0]
     
     def get_id(self):
         return self.__id
@@ -32,10 +31,6 @@ class Photo(object):
         self.data['status'] = 200
     
     __to_dict = to_dict
-
-    @property
-    def make_url(self):
-        return photos.url(self.id)
 
     def save(self):
         """ saves to redis with the id as the key, also adds the object to a list saved in an images dict """

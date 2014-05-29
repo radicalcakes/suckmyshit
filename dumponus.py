@@ -1,4 +1,5 @@
 import os
+import datetime
 import ast
 import redis
 from flask import (Flask, request, url_for, json, jsonify, 
@@ -8,6 +9,7 @@ from flask.ext.uploads import (UploadSet, configure_uploads,
 import config
 from PIL import Image
 from werkzeug import secure_filename
+from pyhashxx import hashxx
 import models
 
 
@@ -57,9 +59,26 @@ def return_get_resp(images):
         return return404()
 
 
-def get_content_type(ext):
-    contents = {'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'gif': 'image/gif', 'svg': 'image/svg+xml'}
-    return contents[ext]
+def get_content_type(ext, file):
+    #returns the content type if no content type specified
+    accepted_types = ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/svg']
+    mime = file.mimetype
+    if mime in accepted_types:
+        return mime
+    else:
+        contents = {'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'gif': 'image/gif', 'svg': 'image/svg+xml'}
+        return contents[ext]
+
+
+def make_thumbnail(stream):
+    #creates a thumbnail from a stream
+    return
+
+
+def make_hash_name(ext, name):
+    #makes the hashed name to be used as the id
+    i = hashxx(name) + datetime.datetime.now() + ext
+    return i
 
 
 @app.route('/', methods=['GET'])
