@@ -47,6 +47,14 @@ def return400():
     return resp
 
 
+def return200():
+    RESP_DICT['data'] = ['Success!']
+    RESP_DICT['status'] = 200
+    resp.data = json.dumps(RESP_DICT)
+    resp.status_code = 200
+    return resp
+
+
 def return_get_resp(images):
     """ Returns the proper response for a GET to /api/images """
     if len(images) > 0:
@@ -72,6 +80,10 @@ def get_content_type(ext, file):
 
 def make_thumbnail(stream):
     #creates a thumbnail from a stream
+    size = 450, 250
+    im = Image.open(stream)
+    im.thumbnail(size, Image.ANTIALIAS)
+    #still need to save the thumbnail
     return
 
 
@@ -79,6 +91,10 @@ def make_hash_name(ext, name):
     #makes the hashed name to be used as the id
     i = hashxx(name) + datetime.datetime.now() + ext
     return i
+
+
+def get_title(req):
+    return request.form['title']
 
 
 @app.route('/', methods=['GET'])
@@ -105,16 +121,25 @@ def get_imgs_or_post():
     if req == 'GET':
         return return_get_resp(images)
     elif request.method == 'POST':
-        file = request.files['image']
+        file = request.files['images']
         name = secure_filename(file.filename)
         if file and photos.file_allowed(file, name):
             extension = name.split('.')[1]
+            #reassign the name variable to be the new
+            #uuid with extension
+            name = make_hash_name(extension, name)
             try:
-                filename = photos.save(request.files['image'])
+                filename = photos.save(request.files['image'], name=name)
             except UploadNotAllowed:
                 return return400()
             else:
-                content_type = get_content_type(extension)
+                mime_type = get_content_type(extension, file)
+                size = file.content_length
+                url = photos.url(filename)
+                title = get_title(request)
+                p = models.Photo(name, mime_type, size, url, title=title)
+                p.save()
+                #return 200 (success)
                 return return400()
     else:
         return return400()

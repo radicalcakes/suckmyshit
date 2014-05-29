@@ -73,9 +73,9 @@ GET /api/images
 ```
 
 POST Parameters:
-* image: A binary file, base64 data
+* images: A binary file, base64 data
 * size: Size of the bin file (optional)
-* type: The type of the file that's being sent: file or base64
+* type: The type of the file that's being sent: file or base64 (optional)
 * name (optional): The name of the file, this is automatically detected if uploading a file with a POST 
 * title (optional): Title of the upload
 
@@ -94,6 +94,12 @@ Usage
 
 - GET /api/images - `curl -i -H "Accept: application/json" "localhost:5000/api/images"`
 
-- POST /api/images - `curl "http://localhost:5000/api/images" -F image=@"test.png" -F title="foobar"`
+- POST /api/images - `curl "http://localhost:5000/api/images" -F images=@"test.png" -F title="foobar"`
 
 
+Notes
+--
+ - Do not expect a thumbnail in the datastructures, thumbnails are not available at this point in time
+
+Changelogs
+--
