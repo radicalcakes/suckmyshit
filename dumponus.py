@@ -70,7 +70,6 @@ def return_get_resp(images):
 def get_content_type(ext, file):
     #returns the content type if no content type specified
     accepted_types = ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/svg']
-    print "fool"
     mime = file.mimetype
     if mime in accepted_types:
         return mime
@@ -88,9 +87,9 @@ def make_thumbnail(stream):
     return
 
 
-def make_hash_name(ext, name):
+def make_hash_name(name):
     #makes the hashed name to be used as the id
-    i = str(hashxx(name + str(datetime.datetime.now()))) + ext
+    i = str(hashxx(name + str(datetime.datetime.now()))) + '.'
     return i
 
 
@@ -112,8 +111,9 @@ def index():
 def get_image(img_id):
     img = db.get(img_id)
     if img:
-        img_json = json.dumps(ast.literal_eval(img))
-        resp.data = img_json
+        print img
+        # img_json = json.dumps(ast.literal_eval(img))
+        # resp.data = img_json
         resp.status_code = 200
         return resp
     else:
@@ -133,7 +133,7 @@ def get_imgs_or_post():
             extension = name.split('.')[1]
             #reassign the name variable to be the new
             #uuid with extension
-            name = make_hash_name(extension, name)
+            name = make_hash_name(name)
             try:
                 filename = photos.save(request.files['images'], name=name)
             except UploadNotAllowed:
