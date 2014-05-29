@@ -95,7 +95,12 @@ def make_hash_name(ext, name):
 
 
 def get_title(req):
-    return request.form['title']
+    title = None
+    if 'title' in req.form:
+        title = req.form['title']
+        return title
+    else:
+        return title
 
 
 @app.route('/', methods=['GET'])
@@ -124,7 +129,6 @@ def get_imgs_or_post():
     elif request.method == 'POST':
         file = request.files['images']
         name = secure_filename(file.filename)
-        title = request.form['title']
         if file and photos.file_allowed(file, name):
             extension = name.split('.')[1]
             #reassign the name variable to be the new
@@ -133,6 +137,7 @@ def get_imgs_or_post():
             try:
                 filename = photos.save(request.files['images'], name=name)
             except UploadNotAllowed:
+                print 'fucking retard'
                 return return400()
             else:
                 mime_type = get_content_type(extension, file)
