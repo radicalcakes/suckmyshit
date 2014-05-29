@@ -1,5 +1,5 @@
 import datetime
-from dumponus import db, photos
+from dumponus import db
 
 
 class Photo(object):

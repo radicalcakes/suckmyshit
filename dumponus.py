@@ -139,8 +139,7 @@ def get_imgs_or_post():
                 title = get_title(request)
                 p = models.Photo(name, mime_type, size, url, title=title)
                 p.save()
-                #return 200 (success)
-                return return400()
+                return return200()
     else:
         return return400()
 
