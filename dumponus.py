@@ -89,7 +89,7 @@ def make_thumbnail(stream):
 
 def make_hash_name(ext, name):
     #makes the hashed name to be used as the id
-    i = hashxx(name) + datetime.datetime.now() + ext
+    i = str(hashxx(name + str(datetime.datetime.now()))) + ext
     return i
 
 
