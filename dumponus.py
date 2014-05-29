@@ -70,6 +70,7 @@ def return_get_resp(images):
 def get_content_type(ext, file):
     #returns the content type if no content type specified
     accepted_types = ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/svg']
+    print "fool"
     mime = file.mimetype
     if mime in accepted_types:
         return mime
@@ -123,13 +124,14 @@ def get_imgs_or_post():
     elif request.method == 'POST':
         file = request.files['images']
         name = secure_filename(file.filename)
+        title = request.form['title']
         if file and photos.file_allowed(file, name):
             extension = name.split('.')[1]
             #reassign the name variable to be the new
             #uuid with extension
             name = make_hash_name(extension, name)
             try:
-                filename = photos.save(request.files['image'], name=name)
+                filename = photos.save(request.files['images'], name=name)
             except UploadNotAllowed:
                 return return400()
             else:
