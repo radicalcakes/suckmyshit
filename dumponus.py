@@ -112,8 +112,7 @@ def index():
 def get_image(img_id):
     img_data = db.get(img_id)
     if img_data:
-        print img_data
-        img_json = json.dumps(ast.literal_eval(img_data))
+        img_json = json.dumps(img_data)
         resp.data = img_json
         resp.status_code = 200
         return resp

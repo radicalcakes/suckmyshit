@@ -100,9 +100,11 @@ Usage
 Notes
 --
  - Do not expect a thumbnail in the datastructures, thumbnails are not available at this point in time
+ - pub/sub notifications
+ - add more unittests for helper functions
 
 Changelogs
 --
 
  - Version 0.5
-    - upload singular
+    - Upload one image, title is optional
