@@ -33,6 +33,7 @@ resp = app.response_class(mimetype='application/json')
 
 def return404():
     #this does not overwrite global vars
+    RESP_DICT = {'data': [], 'status': 404}
     resp.data = json.dumps(RESP_DICT)
     resp.status_code = 404
     return resp
@@ -109,11 +110,11 @@ def index():
 
 @app.route('/api/images/<img_id>', methods=['GET'])
 def get_image(img_id):
-    img = db.get(img_id)
-    if img:
-        print img
-        # img_json = json.dumps(ast.literal_eval(img))
-        # resp.data = img_json
+    img_data = db.get(img_id)
+    if img_data:
+        print img_data
+        img_json = json.dumps(ast.literal_eval(img_data))
+        resp.data = img_json
         resp.status_code = 200
         return resp
     else:
@@ -137,14 +138,13 @@ def get_imgs_or_post():
             try:
                 filename = photos.save(request.files['images'], name=name)
             except UploadNotAllowed:
-                print 'fucking retard'
                 return return400()
             else:
                 mime_type = get_content_type(extension, file)
                 size = file.content_length
                 url = photos.url(filename)
                 title = get_title(request)
-                p = models.Photo(name, mime_type, size, url, title=title)
+                p = models.Photo(name, mime_type, size, url, title=title, creation_date=datetime.datetime.now().strftime('%m/%d/%Y/%H:%M:%S'))
                 p.save()
                 return return200()
     else:

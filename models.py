@@ -4,7 +4,7 @@ from dumponus import db
 
 class Photo(object):
     """ Save image data as a dictionary. Access the dictionary with img = new Image() img['data'] """
-    def __init__(self, name, typ, size, url, title=None, creation_date=datetime.datetime.now()):
+    def __init__(self, name, typ, size, url, title=None, creation_date=datetime.datetime.now().strftime('%m/%d/%Y/%H:%M:%S')):
         self.type = typ
         self.title = title
         self.creation_date = creation_date

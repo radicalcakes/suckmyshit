@@ -103,3 +103,6 @@ Notes
 
 Changelogs
 --
+
+ - Version 0.5
+    - upload singular
