@@ -3,3 +3,5 @@ venv
 *.pyc
 sftp-config.json
 config.py
+bower_components
+node_modules
