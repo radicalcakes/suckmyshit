@@ -1,4 +1,4 @@
-Dumpon.us
+Imageuploader
 ==
 
 Simple image uploader
